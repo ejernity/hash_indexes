@@ -17,6 +17,7 @@ int main(int argc, char** argv) {
 
 	BF_Init();
 	strcpy(filename, FILENAME);
+	
 	for (i = 0; i < MAX_FILES; i++) {
 		printf("File %s\n", filename);
 		if (BF_CreateFile(filename) < 0) {

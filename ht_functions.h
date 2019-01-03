@@ -1,6 +1,12 @@
 #ifndef _HT_FUNCTIONS_H_
 #define _HT_FUNCTIONS_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "BF.h"
+
 typedef struct {
     int fileDesc;
     char attrType;

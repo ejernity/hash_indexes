@@ -2,7 +2,14 @@
 
 /* HT_CreateIndex */
 int HT_CreateIndex(char *fileName, char attrType, char *attrName, int attrLength, int buckets) {
-
+    // Create a hash file named 'fileName'
+    if (BF_CreateFile(fileName) < 0) {
+        BF_PrintError("Error creating file");
+		exit(EXIT_FAILURE);
+    } else {
+        // initialization of empty hash file
+        printf("File with name %s just created!", fileName);
+    }
 }
 
 /* HT_OpenIndex */
