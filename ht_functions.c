@@ -6,7 +6,7 @@ int HT_CreateIndex(char *fileName, char attrType, char *attrName, int attrLength
 }
 
 /* HT_OpenIndex */
-HT_info* HT_OpenIndex(char *filename) {
+HT_info* HT_OpenIndex(char *fileName) {
 
 }
 
