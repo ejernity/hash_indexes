@@ -3,8 +3,12 @@
 #include <string.h>
 
 #include "BF.h"
+#include "ht_functions.h"
+#include "sht_functions.h"
 
 #define FILENAME "file"
+/* ATTRNAME used to check success of HT_CreateIndex */
+#define ATTRNAME "id"
 #define MAX_FILES 100
 #define MAX_BLOCKS 500
 
@@ -12,12 +16,19 @@ int main(int argc, char** argv) {
 	int bfs [MAX_FILES];
 	int i, j;
 	char filename [5];
+	/* attrName used to check success of HT_CreateIndex */
+	char attrName [3];
 	void* block;
 	int blkCnt;
 
 	BF_Init();
 	strcpy(filename, FILENAME);
+	/* Code used to check success of HT_CreateIndex */
+	strcpy(attrName, ATTRNAME);
 	
+	HT_CreateIndex(filename, 'i', attrName, 10*sizeof(int), 5);
+
+/*
 	for (i = 0; i < MAX_FILES; i++) {
 		printf("File %s\n", filename);
 		if (BF_CreateFile(filename) < 0) {
@@ -57,5 +68,6 @@ int main(int argc, char** argv) {
 		}
 
 	}
+*/
 	return 0;
 }

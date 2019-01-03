@@ -22,6 +22,13 @@ typedef struct {
     char address[40];
 } Record;
 
+typedef struct {
+	int recordsCounter;
+	Record records[6];
+	int maxRecords;
+	int nextBlock;
+} Block;
+
 int HT_CreateIndex(char *fileName, char attrType, char *attrName, int attrLength, int buckets);
 
 HT_info* HT_OpenIndex(char *fileName);
