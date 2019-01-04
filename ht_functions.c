@@ -83,6 +83,11 @@ HT_info* HT_OpenIndex(char *fileName) {
 			return NULL;
 		} else {
 			HT_info *header_info = (HT_info*) malloc(sizeof(HT_info));
+			header_info->fileDesc = ((HT_info*)block)->fileDesc;
+			header_info->attrType = ((HT_info*)block)->attrType;
+			strcpy(header_info->attrName,((HT_info*)block)->attrName);
+			header_info->attrLength = ((HT_info*)block)->attrLength;
+			header_info->numBuckets = ((HT_info*)block)->numBuckets;
 			return header_info;
 		}
 	}
