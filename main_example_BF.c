@@ -28,6 +28,15 @@ int main(int argc, char** argv) {
 	
 	HT_CreateIndex(filename, 'i', attrName, 10, 5);
 
+	HT_info *ht_info = HT_OpenIndex(filename);
+
+	if (HT_CloseIndex(ht_info) < 0) {
+		printf("Error on closing file\n");
+		return -1;
+	} else {
+		printf("File closed successfully!\n");
+	}
+
 /*
 	for (i = 0; i < MAX_FILES; i++) {
 		printf("File %s\n", filename);

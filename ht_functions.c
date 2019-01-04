@@ -71,12 +71,33 @@ int HT_CreateIndex(char *fileName, char attrType, char *attrName, int attrLength
 
 /* HT_OpenIndex */
 HT_info* HT_OpenIndex(char *fileName) {
-
+	// Open hash file
+	int fileDesc;
+	if ((fileDesc = BF_OpenFile(fileName)) < 0) {
+		BF_PrintError("Error opening file");
+		return NULL;
+	} else {
+		void *block;
+		if (BF_ReadBlock(fileDesc, 0, &block) < 0) {
+			BF_PrintError("Error getting block");
+			return NULL;
+		} else {
+			HT_info *header_info = (HT_info*) malloc(sizeof(HT_info));
+			return header_info;
+		}
+	}
 }
 
 /* HT_CloseIndex */
 int HT_CloseIndex(HT_info *header_info) {
-
+	// Close file described in header_info
+	if (BF_CloseFile(header_info->fileDesc) < 0) {
+		BF_PrintError("Error closing file");
+		return -1;
+	} else {
+		free(header_info);
+		return 0;
+	}
 }
 
 /* HT_InsertEntry */
