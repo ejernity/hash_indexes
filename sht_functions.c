@@ -33,7 +33,7 @@ int SHT_CreateSecondaryIndex(char *sfileName, char *attrName, int attrLength, in
 					strcpy(sht_info->attrName,attrName);
 					sht_info->attrLength = attrLength;
 					sht_info->numBuckets = buckets;
-					strcpy(sht_info->fileName,FILENAME);
+					strcpy(sht_info->fileName, MYFILENAME);
 					printf("Just created SHT_info!\n");
 					// Allocate one block for every bucket
 					for (int i = 0; i < buckets; i++) {

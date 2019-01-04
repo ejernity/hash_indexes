@@ -2,7 +2,7 @@
 #define _SHT_FUNCTIONS_H_
 
 #include "ht_functions.h"
-#define FILENAME "hile"
+#define MYFILENAME "hile"
 
 typedef struct {
     int fileDesc;
