@@ -6,9 +6,10 @@
 #include "ht_functions.h"
 #include "sht_functions.h"
 
-#define FILENAME "file"
-/* ATTRNAME used to check success of HT_CreateIndex */
+#define FILENAME "hile"
+#define SFILENAME "file"
 #define ATTRNAME "id"
+#define SATTRNAME "name"
 #define MAX_FILES 100
 #define MAX_BLOCKS 500
 
@@ -16,16 +17,16 @@ int main(int argc, char** argv) {
 	//int bfs [MAX_FILES];
 	//int i, j;
 	char filename [5];
-	/* attrName used to check success of HT_CreateIndex */
-	char attrName [3];
+	char sfilename [5];
 	//void* block;
 	//int blkCnt;
 
 	BF_Init();
 	strcpy(filename, FILENAME);
-	/* Code used to check success of HT_CreateIndex */
+
+	char attrName[3];
 	strcpy(attrName, ATTRNAME);
-	
+
 	HT_CreateIndex(filename, 'i', attrName, 10, 5);
 
 	HT_info *ht_info = HT_OpenIndex(filename);
@@ -37,7 +38,23 @@ int main(int argc, char** argv) {
 		printf("File closed successfully!\n");
 	}
 
-/*
+	strcpy(sfilename, SFILENAME);
+	char sattrName[5];
+	strcpy(sattrName, SATTRNAME);
+
+	SHT_CreateSecondaryIndex(sfilename, sattrName, 10, 5);
+
+	SHT_info *sht_info = SHT_OpenSecondaryIndex(sfilename);
+
+	if (SHT_CloseSecondaryIndex(sht_info) < 0) {
+		printf("Error on closing file\n");
+		return -1;
+	} else {
+		printf("File closed successfully!\n");
+	}	
+
+	/*
+	
 	for (i = 0; i < MAX_FILES; i++) {
 		printf("File %s\n", filename);
 		if (BF_CreateFile(filename) < 0) {
@@ -77,6 +94,7 @@ int main(int argc, char** argv) {
 		}
 
 	}
-*/
+
+	*/
 	return 0;
 }

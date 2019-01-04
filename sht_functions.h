@@ -2,13 +2,14 @@
 #define _SHT_FUNCTIONS_H_
 
 #include "ht_functions.h"
+#define FILENAME "hile"
 
 typedef struct {
     int fileDesc;
-    char *attrName;
+    char attrName[10];
     int attrLength;
     long int numBuckets;
-    char *fileName;
+    char fileName[10];
 } SHT_info;
 
 typedef struct {
