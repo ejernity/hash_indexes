@@ -17,38 +17,51 @@ int HT_CreateIndex(char *fileName, char attrType, char *attrName, int attrLength
 		} else {
 			// Get block (HD to RAM)
 			void *block;
-			BF_AllocateBlock(fileDesc);
-			if (BF_ReadBlock(fileDesc, 0, &block) < 0) {
-				BF_PrintError("Error getting block");
+			if (BF_AllocateBlock(fileDesc) < 0) {
+				BF_PrintError("Error allocating block");
 				return -1;
 			} else {
-				// Create HT_info
-				printf("Just read the first block!\n");
-				HT_info ht_info = { fileDesc, attrType, attrName, attrLength, buckets };
-				printf("Just created HT_info!\n");
-				// Allocate one block for every bucket
-				for (int i = 0; i < buckets; i++) {
-					if (BF_AllocateBlock(fileDesc) < 0) {
-						BF_PrintError("Error allocating block");
-						return -1;					
-					}
-					printf("A block for the %d bucket just allocated!\n", i+1);
-				}
-				// Convert HT_info struct to bytearray block
-				memcpy(block, &ht_info, sizeof(HT_info));
-				printf("memcpy success!\n");
-				// Write this block again into the HD
-				if (BF_WriteBlock(fileDesc, 0) < 0) {
-					BF_PrintError("Error writing block back");
+				if (BF_ReadBlock(fileDesc, 0, &block) < 0) {
+					BF_PrintError("Error getting block");
 					return -1;
 				} else {
-					printf("Just wrote the first block back to disk!\n");
-					// Store changes
-					if (BF_CloseFile(fileDesc) < 0) {
-						BF_PrintError("Error closing file");
-						return -1;
+					// Create HT_info
+					printf("Just read the first block!\n");
+					HT_info *ht_info = (HT_info*)malloc(sizeof(HT_info));
+					// Initialization of HT_info
+					ht_info->fileDesc = fileDesc;
+					ht_info->attrType = attrType;
+					strcpy(ht_info->attrName,attrName);
+					ht_info->attrLength = attrLength;
+					ht_info->numBuckets = buckets;
+					printf("Just created HT_info!\n");
+					// Allocate one block for every bucket
+					for (int i = 0; i < buckets; i++) {
+						if (BF_AllocateBlock(fileDesc) < 0) {
+							BF_PrintError("Error allocating block");
+							return -1;					
+						}
+						printf("A block for the %d bucket just allocated!\n", i+1);
 					}
-					printf("Just store block changes into file!\n");
+					// Convert HT_info struct to bytearray block
+					memcpy(block, ht_info, sizeof(HT_info));
+					printf("memcpy success!\n");
+					// Write this block again into the HD
+					if (BF_WriteBlock(fileDesc, 0) < 0) {
+						BF_PrintError("Error writing block back");
+						return -1;
+					} else {
+						printf("Just wrote the first block back to disk!\n");
+						free(ht_info);
+						/* NO NEED TO CLOSE FILE IN EVERY SIGNLE FUNCTION BECAUSE I WILL HAVE TO OPENFILE IN EACH FUNCTION THEN
+						// Store changes
+						if (BF_CloseFile(fileDesc) < 0) {
+							BF_PrintError("Error closing file");
+							return -1;
+						}
+						printf("Just store block changes into file!\n");
+						*/
+					}
 				}
 			}
 		}
